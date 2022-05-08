@@ -1,0 +1,15 @@
+#!/bin/bash
+
+[[ $# -eq 0 ]] && echo "Error" && exit 1
+
+if [[ ! -d ~/.junk ]]; then
+	mkdir ~/.junkl
+fi
+
+opt=$1
+
+case $opt in
+	-l) ls -l ~/.junk ;; 
+	-p) rm -r ~/.junk/* ;;
+	 *) mv $* ~/.junk ;;
+esac

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+read -p "Input an existing dir: " folder
+read -p "Input a name of file: " filename
+
+if [[ ! -d $folder ]];
+then
+	echo "Error: not a folder"
+	exit 2
+fi
+
+for fich in $folder/*; do
+	if [[ -f $fich ]]; then
+		sha256sum $fich >> $fichier
+	fi
+done
+i=0
+for fich in $folder/*; do
+	if [[ -f $fich && $fich != $fichier ]];then
+		((i++))		
+		hash1=$(sed -n "$i p" $fichier)
+		hash2=$(sha256sum $fich) 
+		if [[ $hash1 != $hash2 ]];then
+			echo "Les haches ne correspondent pas"
+			exit 3
+		fi	
+	fi
+done
+echo "All files are valid"

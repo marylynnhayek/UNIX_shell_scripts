@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+	echo "Usage: $0 directory"
+		exit 1
+fi
+
+folder=$1
+
+if [[ ! -d $folder ]]; then
+	echo "Error: argument should be a directory"
+	exit 2
+fi
+
+for fich in $folder/*; do
+	if [[ -f "$fich" ]]; then
+		exp=" "
+		if [[ "$fich" =~ $exp ]]; then
+			fich1=$(echo "$fich" | tr -d ' ')
+			while [[ -f "$fich1" ]]; do
+				fich1=${fich1}_$RANDOM
+			done
+			echo "$fich" "$fich1"
+			mv "$fich" $fich1 
+		fi
+	fi
+done

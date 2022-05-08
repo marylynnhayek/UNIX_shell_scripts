@@ -1,0 +1,21 @@
+#!/bin/bash
+
+[[ $# -ne 2 ]]&& echo "Usage: $0 user pass"&& exit 1
+
+
+user=$1
+pass=$2
+
+concat=${user}$pass
+sel=$(echo $concat | sha512sum | awk '{print $1}')
+
+concat=${sel}$pass
+passhache=$(echo $concat | sha512sum | awk '{print $1}')
+
+if [[ $? -eq 0 ]]; then
+	echo $passhache
+	exit 0
+else
+	echo "Error"
+	exit 2
+fi

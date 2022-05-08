@@ -1,0 +1,32 @@
+#!/bin/bash
+
+[[ $# -ne 0 ]] && echo "Error" && exit 1
+
+folder=""
+while [[ ! -d $folder ]]; do
+	read -p "Entrer un dossier: " folder
+done
+
+folder=""
+until [[ -d $folder ]];do
+	read -p "Entrer un dossier: " folder
+done
+
+owner=$(ls -ld $folder | awk '{print $3}')
+if [[ $USERNAME == $owner ]]; then
+	echo "username is same as the owner"
+else
+	echo "username is not same as owner"
+fi
+
+grp=$(ls -ld $folder | awk '{print $4}')
+
+
+if groups $USERNAME | grep -q $grp ;then
+	echo "username appartient au group du folder"
+else
+	echo "il n'appartient pas"
+fi
+
+
+#if cat /etc/group | grep $grp | grep $USERNAME ; then

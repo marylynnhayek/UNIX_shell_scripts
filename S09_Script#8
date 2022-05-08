@@ -1,0 +1,11 @@
+#!/bin/bash
+
+c=0
+while [[ $c -le 120 ]]; do
+	((c++))
+	x=$(ps aux | awk '$1=="root" && $12 == "virus" {print $0}')
+	echo $x >> log.txt
+	tail -3 log.txt
+	logger -t $0 $x
+	sleep 1
+done

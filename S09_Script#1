@@ -1,0 +1,34 @@
+#!/bin/bash
+
+countX(){
+	local folder=$1
+	c=0
+	for fich in $folder/*; do
+		if [[ -f $fich && -x $fich ]];then
+			((c++))
+		fi
+	done
+}
+
+if [[ $# -eq 0 ]]; then
+	folder=$(pwd)
+	countX $folder
+	echo $c
+	exit 0
+fi
+s=0
+for folder in $*; do
+	c=0
+	if [[ ! -d $folder ]]; then
+		echo "Error: $folder n'est pas un dir"
+		exit 1
+	fi
+	if [[ ! -r $folder ]]; then
+		echo "Error: $folder n'est pas lisible"
+		exit 2
+	fi
+	countX $folder
+	echo "$folder contient $c executable"
+	((s+=c))
+done
+echo "Le nb total d'exec est: $s"

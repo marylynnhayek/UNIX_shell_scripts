@@ -1,0 +1,31 @@
+#!/bin/bash
+
+[[ $# -eq 0 ]] && echo "Error" && exit 1
+
+if [[ ! -d ~/.junk ]]; then
+	mkdir ~/.junkl
+fi
+
+echo $((OPTIND-1)) $#
+echo $*
+
+while getopts :lpd: opt; do
+ case $opt in
+	l) echo "l" ;; #ls -l ~/.junk ;; 
+	p) echo "p" ;; #rm -r ~/.junk/* ;;
+	d) echo "d $OPTARG" ;; 
+	:) echo "Error, no arg to d";;	
+       	\?) echo "Error option";;
+ esac
+done
+
+echo $((OPTIND-1)) $#
+echo $*
+
+shift $((OPTIND-1))
+echo $((OPTIND-1)) $#
+echo $*
+str=$*
+if [[ -n $str ]];then
+   echo $str	#mv $str ~/.junk
+fi

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+read -p "User: " user
+
+if ! grep -q $user /etc/passwd ;then
+	echo "User does not exist"
+	exit 2
+fi
+
+ps aux | awk -v u=$user '$1 == u && $3 > 80{print $2}' | xargs kill -9

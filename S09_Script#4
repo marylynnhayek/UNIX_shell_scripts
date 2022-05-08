@@ -1,0 +1,57 @@
+#!/bin/bash
+
+if [[ $# -ne 3 ]]; then
+	echo "Usage: $0 fich1 fich2 n"
+	exit 1
+fi
+
+fich1=$1
+fich2=$2
+n=$3
+
+if [[ ! -f $fich1 || ! -f $fich2 ]]; then
+	echo "Error: input regular files"
+	exit 2
+fi
+
+s1=$(sed -n "$n p" $fich1)
+s2=$(sed -n "$n p" $fich2)
+
+#s1=$(awk -v x=$n 'NR == x {print $0}' $fich1)
+#s2=$(awk -v x=$n 'NR == x {print $0}' $fich2)
+
+echo "$s1"
+echo "$s2"
+
+if [[ -n $s1 && -n $s2 ]]; then
+	echo "s1 et s2 sont nont nulles"
+else
+	echo "l'une des deux est nulle"
+fi
+
+len1=${#s1}
+len2=${#s2}
+if [[ $len1 -eq $len2 ]] ;then
+	echo "s1 et s2 sont de meme longueur"
+else
+	echo "Elles ne sont pas de meme long."
+fi
+
+if [[ $s1 == $s2 ]] ;then
+	echo "s1 et s2 sont identique"
+else
+	echo "Elles ne sont pas identiq."
+fi
+
+if [[ $s1 > $s2 ]] ;then
+	echo "s1 > s2 "
+else
+	echo "s1 <= s2"
+fi
+
+
+if [[ $fich1 -nt $fich2 ]]; then
+	echo "fich1 plus recent que fich2"
+else
+	echo "fich1 n'est pas plus recent que fich2"
+fi

@@ -1,0 +1,49 @@
+Exercice1:
+
+1. For each of the following commands, identify the corresponding purpose:
+
+usermod -L: Lock the user account
+passwd -u: Unlock the user account
+chage -E: Set the expiration date for the user account
+groupdel: Delete the group
+useradd -s: Create a new user account with a specific login shell
+groupadd -g: Create a new group with a specific GID
+userdel -r: Remove the user account and all files in its home directory, the home directory itself and the user’s mail spool
+usermod -l: Change the login name of the user account
+groupmod -n: Change the name of the group
+useradd -m: Create a new user account and its home directory
+
+2. For each of the following passwd commands, identify the corresponding chage command:
+passwd -n: chage -m
+passwd -x: chage -M
+passwd -w: chage -W
+passwd -i: chage -I
+passwd -S: chage -l
+
+b. Explain in detail the purpose of the commands in the previous question:
+
+In Linux, you can use the passwd -n command (or chage -m) to set the minimum number 
+of days between password changes, the passwd -x command (or chage -M) to set the maximum
+number of days during which a password is valid, the passwd -w command (or chage -W) to set 
+the number of days of warning before the password expires, the passwd -i command (or chage -I)
+to set the number of days of inactivity during which the user should change the password and the 
+passwd -S command (or chage -l) to show brief information about the password of the user account.
+
+3. What commands can you use to lock a user account? And which commands to unlock it?
+
+If you want to lock an user account, you can use one of these commands: usermod -L, usermod --lock
+and passwd -l. Instead, if you want to unlock it, you can use usermod -U, usermod --unlock and passwd -u.
+
+4. By convention, which IDs are assigned to system accounts and which to ordinary users?
+
+System accounts usually have UIDs less than 100 or between 500 and 1000, while ordinary users have UIDs
+starting at 1000 although some legacy systems may start numbering at 500. The root user has UID 0. Remember
+that the UID_MIN and UID_MAX values in /etc/login.defs define the range of UIDs used for the creation of 
+ordinary users. From the standpoint of LPI Linux Essentials and LPIC-1, system accounts have UIDs less than 
+1000 and ordinary users have UIDs greater than 1000.
+
+5. How do you find out if a user account, which was previously able to access the system, is now locked? Assume your system uses shadow passwords.
+
+When shadow passwords are used, the second field in /etc/passwd contains the x character for each user account, 
+because the encrypted user passwords are stored in /etc/shadow. In particular, the encrypted password of a user 
+account is stored in the second field of this file and, if it starts with an exclamation mark, the account is locked.

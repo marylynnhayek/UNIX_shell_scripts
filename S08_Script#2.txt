@@ -1,0 +1,33 @@
+#!/bin/bash
+message(){
+	echo "Hello: Ex1a"
+}
+
+reading()
+{
+	echo "Lire 2 entiers:"
+	read a b
+}
+
+sum(){
+	#local x=$1
+	#local y=$2
+	#((s=$x+$y))
+	((s=$1+$2))
+	#return $s	
+}
+
+sum1(){
+	local s
+	((s=$1+$2))
+	return $s	
+}
+#main
+
+message
+reading
+sum $a $b
+echo $s
+
+sum1 $a $b
+echo $?

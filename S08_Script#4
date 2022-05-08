@@ -1,0 +1,57 @@
+#!/bin/bash
+display()
+{
+	local folder=$1
+	for fich in $folder/*; do
+		if [[ -f $fich ]];then
+			base=$(basename $fich)
+			echo $base
+		fi
+	done
+}
+
+copy(){
+	local folder=$1
+	for fich in $folder/*; do
+		if [[ -f $fich ]];then
+			base=$(basename $fich)
+			newname=${base}"_"$(date +%s_%N)"_"$RANDOM
+			echo $newname
+			cp "$fich" /var/tmp/$newname
+		fi
+	done
+}
+
+reading(){
+
+	folder=""
+	while [[ ! -d $folder ]]; do
+	read -p "Entrer un dir: " folder
+	done
+
+}
+
+#[[ $# -ne 1 ]] && echo "Usage: $0 directoire" && exit 1
+
+
+if (( $# != 1 )); then
+	echo "Error"
+	exit 1
+fi
+
+
+if [[ ! -d $1 ]]; then
+	echo "Error: argument doit etre un dir"
+	exit 2
+fi
+
+#display $1
+#copy $1
+reading
+dir="/home/ralph/backup"
+if [[ ! -d $dir ]] ;then
+	mkdir $dir
+fi
+find $folder \( -name "*.txt" -o -name "*.sh" \) -exec cp '{}' $dir \;
+
+chmod a+x $(pwd)/*.sh

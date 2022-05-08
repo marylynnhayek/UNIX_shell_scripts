@@ -1,0 +1,40 @@
+Script #3
+
+#!/bin/bash
+
+if [[ $# -ne 4 ]]; then
+	echo "Usage: $0 arg1 arg2 arg3 arg4"
+	exit 1
+fi
+
+echo "nb arg: $#"
+echo "Les arguments: $*"
+echo "Les arguments: $@"
+echo "Les arguments: $1 $2 $3 $4"
+
+for i in $@; do
+	echo $i
+done
+
+for ((i=1; i<=$#; i++)); do
+	echo "$i: ${!i}"
+done
+
+for i in $*; do
+	echo $i
+done
+
+//Manip tabs
+
+a=(1 2 3 4)
+echo ${a[0]} ${a[1]} ${a[2]} ${a[3]}
+echo "Tableau: ${a[@]}"
+echo "Nombre d'elem du tab: ${#a[@]}"
+t=($@)
+for((i=${#t[@]}-1;i>=0;i--)); do
+	echo ${t[$i]}
+done
+shift 2
+echo "Les arguments: $*"
+echo "nb d'arg: $#"
+echo "Les arg: $1 $2"

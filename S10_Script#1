@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]];then
+	echo "Usage: $0 username"
+	exit 1
+fi
+
+if [[ $USERNAME != "root" ]]; then
+# [[ $UID -ne 0 ]]
+	echo "L'utilisateur courant n'est pas root"
+	exit 1
+fi
+
+user=$1
+
+if ! grep "$1" /etc/passwd ; then
+	echo "User does not exist"
+	exit 2
+fi
+
+
+tar -czf /tmp/backup.tgz /home/$user
+
+if userdel -r $user ;then # [[ $? -eq 0 ]]
+	echo "Bon execution"
+	exit 0
+else
+	echo "Error d'execution"
+	exit 2
+fi

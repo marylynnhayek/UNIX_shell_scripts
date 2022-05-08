@@ -1,0 +1,25 @@
+#!/bin/bash
+
+[[ $# -ne 1 ]] && echo "Usage: $0 username" && exit 1 
+
+user=$1
+
+while who | grep -q "$user" #> /dev/null
+do
+	echo "$user is connected" 
+	sleep 2
+done
+
+echo "$user is not connected"
+
+if [[ $USERNAME == $user ]] ; then
+	echo "Current user is same as $user"
+else
+	echo "Current user is not the same as $user"
+fi
+
+if [[ $UID -eq 0 ]];then #$USERNAME == root
+	echo "Current username is the root"
+else 
+	echo "$USERNAME et $UID"
+fi

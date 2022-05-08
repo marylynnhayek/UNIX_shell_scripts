@@ -1,0 +1,17 @@
+#!/bin/bash
+
+read -p "Entrez un nom de fichier: " fich
+
+if [[ ! -f $fich ]]; then
+	echo "Error: should be a regular file"
+	exit 2
+fi
+
+sha256sum $fich > ${fich}.sha256
+
+if sha256sum -c ${fich}.sha256 ; then
+	echo "le fichier hache correpsond au hache"
+else 
+	echo "Error"
+	exit 3 
+fi
